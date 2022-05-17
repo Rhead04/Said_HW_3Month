@@ -1,0 +1,41 @@
+from config import dp,bot
+from aiogram.types import InlineKeyboardButton,InlineKeyboardMarkup,ParseMode
+from aiogram import types,Dispatcher
+
+
+async def quiz2(call: types.CallbackQuery):
+    markup = InlineKeyboardMarkup()
+    button_call2 = InlineKeyboardButton("next",callback_data="button_call2")
+    markup.add(button_call2)
+    question = "Какой по счету месяц идет наш курс?"
+    answer = ['1', '2', '3', '4']
+    await bot.send_poll(
+        chat_id=call.from_user.id,
+        question=question,
+        options=answer,
+        is_anonymous=False,
+        type='quiz',
+        correct_option_id=2,
+        explanation="Каждый Охотник Желатет Знать Где Сидит Фазан",
+        explanation_parse_mode=ParseMode.MARKDOWN_V2,
+        reply_markup=markup
+    )
+async def quiz3(call: types.CallbackQuery):
+    markup = InlineKeyboardMarkup()
+    button_call4 = InlineKeyboardButton("next", callback_data="button_call4")
+    markup.add(button_call4)
+    question1 = "Какой сейчас год?"
+    answers1 = ['2020', '2024', '2020', '2011']
+    await bot.send_poll(
+        chat_id=call.from_user.id,
+        question=question1,
+        options=answers1,
+        is_anonymous=False,
+        type='quiz',
+        correct_option_id=3,
+        explanation_parse_mode=ParseMode.MARKDOWN_V2,
+    )
+
+def register_callbacks(dp:Dispatcher):
+    dp.register_callback_query_handler(quiz2,lambda call:call.data=="button_call")
+    dp.register_callback_query_handler(quiz3,lambda call:call.data=='button_call2')
